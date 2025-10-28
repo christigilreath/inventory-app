@@ -1,5 +1,11 @@
 import pool from "./pool.js";
 
+const getCategories = async ()=>{
+  const SQL = `SELECT category FROM categories`
+  const {rows} = await pool.query(SQL)
+  return rows
+}
+
 const getInstrumentsInCategory = async (category) => {
   const allowedTables = ["Orchestral", "Guitars", "Keyboards", "Drums"];
   if (allowedTables.includes(category)) {
@@ -18,4 +24,11 @@ const getInstrument = async (id) => {
   return rows;
 };
 
-export { getInstrumentsInCategory, getInstrument };
+const addCategory = async (categoryName)=>{
+ const SQL = `INSERT INTO categories (category) VALUES($1)`
+ 
+  await pool.query(SQL,[categoryName])
+  console.log(`${categoryName} added`)
+}
+
+export { getCategories, getInstrumentsInCategory, getInstrument, addCategory };

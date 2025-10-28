@@ -1,4 +1,4 @@
-import { getInstrumentsInCategory } from "../db/queries.js";
+import { getInstrumentsInCategory, addCategory } from "../db/queries.js";
 
 const renderCategory = async (req, res) => {
   const category = req.params.category;
@@ -8,4 +8,15 @@ const renderCategory = async (req, res) => {
   console.log(instruments)
 };
 
-export default renderCategory;
+const renderCategoryForm = async (req, res) => {
+res.render("categoryForm", {title: "Add Category"})
+}
+
+const addNewCategory = async (req, res)=>{
+ const categoryName = req.body.categoryName
+ addCategory(categoryName)
+ 
+  res.redirect("/")
+}
+
+export  {renderCategory, renderCategoryForm, addNewCategory};

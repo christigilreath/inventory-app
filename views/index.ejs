@@ -7,9 +7,10 @@
 </head>
 <body>
     <h1>Music Instrument Store</h1>
-    <section><a href="/category/Orchestral">Orchestral</a></section>
-    <section><a href="/category/Guitars">Guitars</a></section>
-    <section><a href="/category/Keyboards">Keyboards</a></section>
-    <section><a href="/category/Drums">Drums</a></section>
+    <% categories.forEach(({category})=>{ %>
+<section><a href="/category/<%=category%>"><%=category%></a><a href="/category/delete">Delete</a></section>
+
+    <%})%>
+   <a href="/category/add">Add Category</a>
 </body>
 </html>
