@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=title%></title>
+  </head>
+  <body>
+    <h1><%=title%></h1>
+    <form action="/product/add" method="POST">
+      <label for="instrument">Instrument: </label>
+      <input type="text" id="instrument" name="instrument" />
+      <label for="quantity">Quantity: </label>
+      <input type="text" id="quantity" name="quantity" />
+      <label for="price">Price: </label>
+      <input type="text" id="price" name="price" />
+      <label for="manufacturer">Manufacturer: </label>
+      <select id="manufacturer" name="manufacturer">
+        <% manufacturerList.forEach(({manufacturer})=>{%>
+        <option value="<%=manufacturer%>"><%=manufacturer%></option>
+        <% })%>
+      </select>
+      <label for="category">Category: </label>
+      <select id="category" name="category">
+        <% categoryList.forEach(({category})=>{%>
+        <option value="<%=category%>"><%=category%></option>
+        <% })%>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

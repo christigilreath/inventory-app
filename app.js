@@ -15,7 +15,7 @@ app.use(express.json())
 
 app.use("/", indexRouter);
 app.use('/category', categoryRouter)
-app.use('/product/:product', productRouter)
+app.use('/product/', productRouter)
 
 
 // app.use("/orchestral");
