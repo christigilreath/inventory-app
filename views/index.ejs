@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Music Instrument Store</h1>
     <% categories.forEach(({category})=>{ %>
-<section><a href="/category/<%=category%>"><%=category%></a><a href="/category/delete">Delete</a></section>
+    <section>
+      <a href="/category/<%=category%>"><%=category%></a>
+      <span
+        ><form action="/category/edit/:<%=category%>" method="PUT">
+          <button type="submit">EDIT</button>
+        </form>
+        <form action="/category/<%=category%>/delete" method="POST">
+          <button type="submit">DELETE</button>
+        </form></span
+      >
+    </section>
 
     <%})%>
-   <a href="/category/add">Add Category</a>
-</body>
+    <a href="/category/add">Add Category</a>
+  </body>
 </html>

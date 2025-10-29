@@ -31,4 +31,11 @@ const addCategory = async (categoryName)=>{
   console.log(`${categoryName} added`)
 }
 
-export { getCategories, getInstrumentsInCategory, getInstrument, addCategory };
+const deleteCategoryAndItems =async (category)=>{
+  const {rows} = await pool.query(`SELECT id FROM categories where categories.category = ($1);`,[category]);
+  const categoryId = rows[0].id
+await pool.query(`DELETE FROM instruments WHERE instruments.categoryId = ($1)`,[categoryId])
+await pool.query(`DELETE FROM categories WHERE categories.category = ($1)`,[category])
+}
+
+export { getCategories, getInstrumentsInCategory, getInstrument, addCategory,deleteCategoryAndItems };
