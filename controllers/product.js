@@ -14,17 +14,32 @@ const renderProduct = async (req, res) => {
     title: instrument.instrument,
     price: instrument.price,
     quantity: instrument.quantity,
+    id: instrument.id,
   });
 };
 
 const renderInstrumentForm = async (req, res) => {
   const manufacturerList = await getManufacturers();
   const categoryList = await getCategories();
+  let id;
+  let instrument;
+  let quantity;
+  let price;
+  if (req.params.id){
+  [{ id, instrument, quantity, price }] = await getInstrument(
+    req.params.id
+  );}
+  let title;
+  instrument ? (title = "Edit Instrument") : (title = "Add New Instrument");
 
   res.render("instrumentForm", {
-    title: "Add New Instrument",
+    title,
     manufacturerList,
     categoryList,
+    id,
+    quantity,
+    instrument,
+    price,
   });
 };
 

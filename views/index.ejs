@@ -7,17 +7,14 @@
   </head>
   <body>
     <h1>Music Instrument Store</h1>
+    <h2>Categories</h2>
     <% categories.forEach(({category})=>{ %>
     <section>
       <a href="/category/<%=category%>"><%=category%></a>
-      <span
-        ><form action="/category/edit/:<%=category%>" method="PUT">
-          <button type="submit">EDIT</button>
-        </form>
-        <form action="/category/<%=category%>/delete" method="POST">
-          <button type="submit">DELETE</button>
-        </form></span
-      >
+
+      <form action="/category/<%=category%>/delete" method="POST">
+        <button type="submit">DELETE CATEGORY</button>
+      </form>
     </section>
 
     <%})%>

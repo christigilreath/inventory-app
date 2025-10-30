@@ -53,7 +53,9 @@ const addInstrument = async ({
   manufacturer,
   category,
 }) => {
-  const {rows: [{id:manufacturerId}]} = await pool.query(
+  const {
+    rows: [{ id: manufacturerId }],
+  } = await pool.query(
     `SELECT id FROM manufacturers WHERE manufacturers.manufacturer = ($1)`,
     [manufacturer]
   );
@@ -63,11 +65,16 @@ const addInstrument = async ({
     `SELECT id FROM categories WHERE categories.category= ($1)`,
     [category]
   );
-  console.log("categoryid", categoryId);
 
   await pool.query(
     `INSERT INTO instruments (instrument, price, quantity, categoryid, manufacturerid) VALUES($1,$2,$3,$4,$5)`,
-    [instrument, price, quantity, parseInt(categoryId), parseInt(manufacturerId)]
+    [
+      instrument,
+      price,
+      quantity,
+      parseInt(categoryId),
+      parseInt(manufacturerId),
+    ]
   );
 };
 export {
