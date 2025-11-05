@@ -3,13 +3,16 @@ import {
   getCategories,
   addInstrument,
   getManufacturers,
+  getCategory,
+  getManufacturer,
+  editInstrument,
 } from "../db/queries.js";
 
 const renderProduct = async (req, res) => {
   const productId = req.params.product;
 
   const [instrument] = await getInstrument(productId);
-  console.log(instrument);
+
   res.render("productPage", {
     title: instrument.instrument,
     price: instrument.price,
@@ -25,21 +28,43 @@ const renderInstrumentForm = async (req, res) => {
   let instrument;
   let quantity;
   let price;
-  if (req.params.id){
-  [{ id, instrument, quantity, price }] = await getInstrument(
-    req.params.id
-  );}
+  let manufacturerid;
+  let categoryid;
+  let selectedManufacturer;
+  let selectedCategory;
+
+  if (req.params.id) {
+    [{ id, instrument, quantity, price, manufacturerid, categoryid }] =
+      await getInstrument(req.params.id);
+    [{ manufacturer: selectedManufacturer }] = await getManufacturer(
+      manufacturerid
+    );
+    console.log(selectedManufacturer);
+    [{ category: selectedCategory }] = await getCategory(categoryid);
+    console.log(selectedCategory);
+  }
+
   let title;
-  instrument ? (title = "Edit Instrument") : (title = "Add New Instrument");
+  let route;
+  if (instrument) {
+    title = "Edit Instrument";
+    route = `/product/edit/${req.params.id}`;
+  } else {
+    title = "Add New Instrument";
+    route = "/product/add";
+  }
 
   res.render("instrumentForm", {
     title,
+    route,
     manufacturerList,
     categoryList,
     id,
     quantity,
     instrument,
     price,
+    selectedManufacturer,
+    selectedCategory,
   });
 };
 
@@ -48,4 +73,9 @@ const addProduct = async (req, res) => {
   res.redirect(`/`);
 };
 
-export { renderProduct, renderInstrumentForm, addProduct };
+const editProduct = async (req, res) => {
+  editInstrument(req.params.id, req.body);
+  res.redirect(`/product/${req.params.id}`);
+};
+
+export { renderProduct, renderInstrumentForm, addProduct, editProduct };

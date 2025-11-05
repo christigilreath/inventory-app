@@ -9,9 +9,14 @@
   </head>
   <body>
     <h1><%=title%></h1>
-    <form action="/product/add" method="POST">
+    <form action="<%=route%>" method="POST">
       <label for="instrument">Instrument: </label>
-      <input value="<%=instrument%>" type="text" id="instrument" name="instrument" />
+      <input
+        value="<%=instrument%>"
+        type="text"
+        id="instrument"
+        name="instrument"
+      />
       <label for="quantity">Quantity: </label>
       <input value="<%=quantity%>" type="text" id="quantity" name="quantity" />
       <label for="price">Price: </label>
@@ -20,14 +25,30 @@
       <select id="manufacturer" name="manufacturer">
         <option value="">--Please choose an option--</option>
         <% manufacturerList.forEach(({manufacturer})=>{%>
-        <option value="<%=manufacturer%>"><%=manufacturer%></option>
+        
+        
+        <option
+          <% if (manufacturer === selectedManufacturer){%>
+          selected="selected"
+          <%}%>
+          value="<%=manufacturer%>"
+        >
+          <%=manufacturer%>
+        </option>
         <% })%>
       </select>
       <label for="category">Category: </label>
       <select id="category" name="category">
         <option value="">--Please choose an option--</option>
         <% categoryList.forEach(({category})=>{%>
-        <option value="<%=category%>"><%=category%></option>
+        <option
+        <% if (category===selectedCategory){ %>
+          selected="selected"
+        <%}%>
+          value="<%=category%>"
+        >
+          <%=category%>
+        </option>
         <% })%>
       </select>
       <button type="submit">Submit</button>

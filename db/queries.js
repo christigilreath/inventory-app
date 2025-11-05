@@ -24,6 +24,20 @@ const getInstrument = async (id) => {
   );
   return rows;
 };
+const getCategory = async (id) => {
+  const { rows } = await pool.query(
+    `SELECT * FROM categories where $1 =categories.id`,
+    [id]
+  );
+  return rows;
+};
+const getManufacturer = async (id) => {
+  const { rows } = await pool.query(
+    `SELECT * FROM manufacturers WHERE $1 = manufacturers.id`,
+    [id]
+  );
+  return rows;
+};
 
 const addCategory = async (categoryName) => {
   const SQL = `INSERT INTO categories (category) VALUES($1)`;
@@ -77,6 +91,30 @@ const addInstrument = async ({
     ]
   );
 };
+
+const editInstrument = async (id, inputValues) => {
+  const { instrument, price, quantity, manufacturer, category } = inputValues;
+  const {
+    rows: [{ id: manufacturerId }],
+  } = await pool.query(
+    `SELECT id FROM manufacturers WHERE manufacturers.manufacturer = ($1);`,
+    [manufacturer]
+  );
+  const {
+    rows: [{ id: categoryId }],
+  } = await pool.query(
+    `SELECT id FROM categories WHERE categories.category= ($1);`,
+    [category]
+  );
+
+  
+  await pool.query(
+    `UPDATE instruments
+    SET instrument= $1, price=$2, quantity=$3, manufacturerid= $4, categoryid=$5
+    WHERE id=$6;`,
+    [instrument, price, quantity, parseInt(manufacturerId), parseInt(categoryId), id]
+  );
+};
 export {
   getCategories,
   getManufacturers,
@@ -85,4 +123,7 @@ export {
   addCategory,
   deleteCategoryAndItems,
   addInstrument,
+  getCategory,
+  getManufacturer,
+  editInstrument,
 };
