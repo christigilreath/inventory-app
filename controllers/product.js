@@ -6,6 +6,7 @@ import {
   getCategory,
   getManufacturer,
   editInstrument,
+  deleteInstrument
 } from "../db/queries.js";
 
 const renderProduct = async (req, res) => {
@@ -78,4 +79,9 @@ const editProduct = async (req, res) => {
   res.redirect(`/product/${req.params.id}`);
 };
 
-export { renderProduct, renderInstrumentForm, addProduct, editProduct };
+const deleteProduct = async(req,res)=>{
+  deleteInstrument(req.params.id)
+  res.redirect("/")
+}
+
+export { renderProduct, renderInstrumentForm, addProduct, editProduct, deleteProduct };

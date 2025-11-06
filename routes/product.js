@@ -1,5 +1,5 @@
 import express from "express";
-import {renderProduct, renderInstrumentForm, addProduct, editProduct} from "../controllers/product.js";
+import {renderProduct, renderInstrumentForm, addProduct, editProduct,deleteProduct} from "../controllers/product.js";
 
 const productRouter = express.Router({mergeParams: true})
 
@@ -7,6 +7,7 @@ productRouter.get("/add", renderInstrumentForm)
 productRouter.post("/add", addProduct)
 productRouter.get("/edit/:id", renderInstrumentForm)
 productRouter.post("/edit/:id", editProduct)
+productRouter.post("/delete/:id", deleteProduct)
 productRouter.get("/:product", renderProduct)
 
 

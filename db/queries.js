@@ -107,14 +107,24 @@ const editInstrument = async (id, inputValues) => {
     [category]
   );
 
-  
   await pool.query(
     `UPDATE instruments
     SET instrument= $1, price=$2, quantity=$3, manufacturerid= $4, categoryid=$5
     WHERE id=$6;`,
-    [instrument, price, quantity, parseInt(manufacturerId), parseInt(categoryId), id]
+    [
+      instrument,
+      price,
+      quantity,
+      parseInt(manufacturerId),
+      parseInt(categoryId),
+      id,
+    ]
   );
 };
+
+const deleteInstrument = async(id)=>{
+  await pool.query(`DELETE FROM instruments WHERE instruments.id=$1`,[id])
+}
 export {
   getCategories,
   getManufacturers,
@@ -126,4 +136,5 @@ export {
   getCategory,
   getManufacturer,
   editInstrument,
+  deleteInstrument
 };

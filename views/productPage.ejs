@@ -11,6 +11,9 @@
     <p>Price: $<%=price%></p>
     <p>Quantity: <%=quantity%></p>
     <a href="/product/edit/<%=id%>">Edit Item</a>
+    <form action="/product/delete/<%=id%>" method="POST">
+      <button type="submit">DELETE</button>
+    </form>
     <a href="/">Home</a>
   </body>
 </html>
